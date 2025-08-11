@@ -120,6 +120,7 @@ namespace EmployeeManagment.Forms
             btnGuardar.Size = new Size(75, 30);
             btnGuardar.TabIndex = 1;
             btnGuardar.Text = "Guardar";
+            btnGuardar.Click += btnGuardar_Click;
             // 
             // CentroEditForm
             // 

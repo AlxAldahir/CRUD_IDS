@@ -1,9 +1,6 @@
-using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Forms;
 using EmployeeManagment.Models;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace EmployeeManagment.Forms
 {
