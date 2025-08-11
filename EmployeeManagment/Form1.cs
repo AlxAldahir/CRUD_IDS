@@ -48,5 +48,34 @@ namespace EmployeeManagment
                 );
             }
         }
+
+        private void empleadosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadIntoContent(new Controls.EmpleadosControl());
+        }
+
+        private void puestosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadIntoContent(new Controls.PuestosControl());
+        }
+
+        private void centrosTrabajoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadIntoContent(new Controls.CentrosControl());
+        }
+
+        private void reporteEmpleadosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadIntoContent(new Controls.ReporteEmpleadosControl());
+        }
+
+        private void LoadIntoContent(Control control)
+        {
+            panelContent.SuspendLayout();
+            panelContent.Controls.Clear();
+            control.Dock = DockStyle.Fill;
+            panelContent.Controls.Add(control);
+            panelContent.ResumeLayout();
+        }
     }
 }
