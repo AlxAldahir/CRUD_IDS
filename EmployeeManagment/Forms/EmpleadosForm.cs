@@ -1,9 +1,6 @@
-using System;
-using System.ComponentModel;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using System.Windows.Forms;
 using EmployeeManagment.Models;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace EmployeeManagment.Forms
 {
@@ -20,6 +17,7 @@ namespace EmployeeManagment.Forms
                 Load += async (s, e) => await LoadDataAsync();
             }
 
+            /*Asignación de eventos a los botones Agregar, Editar y Eliminar*/
             btnAdd.Click += async (s, e) => await AddAsync();
             btnEdit.Click += async (s, e) => await EditAsync();
             btnDelete.Click += async (s, e) => await DeleteAsync();
@@ -51,9 +49,13 @@ namespace EmployeeManagment.Forms
 
         private Empleado? Current => binding.Current as Empleado;
 
+
+        //Edita el empleado seleccionado
         private async System.Threading.Tasks.Task EditAsync()
         {
             if (Current == null) return;
+
+            // Abre el formulario de edición para el empleado actual
             using var dlg = new EmpleadoEditForm(Current.IdEmpleado);
             if (dlg.ShowDialog(this) == DialogResult.OK)
                 await LoadDataAsync();

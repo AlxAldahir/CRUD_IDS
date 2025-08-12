@@ -1,10 +1,6 @@
-using System;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Windows.Forms;
 using EmployeeManagment.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace EmployeeManagment.Forms
 {
@@ -29,10 +25,12 @@ namespace EmployeeManagment.Forms
             return LicenseManager.UsageMode == LicenseUsageMode.Designtime || DesignMode;
         }
 
+        /*Este es el método que realiza la consulta de los datos del reporte*/
         private async System.Threading.Tasks.Task LoadDataAsync()
         {
             using var ctx = new ApplicationDbContext();
-            // Ejecuta el SP y mapea al VM; ajusta si necesitas parámetros
+
+            // Ejecuta el SP y mapea al ViewModel
             var list = await ctx.Set<ReporteEmpleadosViewModel>()
                 .FromSqlRaw("EXEC sp_ReporteEmpleados")
                 .ToListAsync();

@@ -9,6 +9,7 @@ namespace EmployeeManagment.Forms
         private readonly int? _empleadoId;
         public Empleado? Result { get; private set; }
 
+        //Método constructor que recibe un ID opcional para editar un empleado existente
         public EmpleadoEditForm(int? empleadoId = null)
         {
             _empleadoId = empleadoId;
@@ -30,15 +31,18 @@ namespace EmployeeManagment.Forms
             return LicenseManager.UsageMode == LicenseUsageMode.Designtime || DesignMode;
         }
 
+        // Método que se ejecuta al cargar el formulario
         private async void EmpleadoEditForm_Load(object? sender, EventArgs e)
         {
             await ReloadCombosAsync();
 
             if (cboCentro.Items.Count == 0 || cboPuesto.Items.Count == 0)
             {
-                MessageBox.Show("No hay Centros o Puestos registrados. Abre los catálogos para crearlos.", "Catálogos vacíos", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("No hay Centros o Puestos registrados. Abre los catálogos para crearlos.", "Catálogos vacíos",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
+            // Si se está editando un empleado, cargar sus datos en los campos del formulario
             if (_empleadoId.HasValue)
             {
                 using var ctx = new ApplicationDbContext();
@@ -59,20 +63,27 @@ namespace EmployeeManagment.Forms
 
         private async void btnGuardar_Click(object? sender, EventArgs e)
         {
+            /*1. Valicación de campos*/
             if (!ValidateInputs()) return;
 
             using var ctx = new ApplicationDbContext();
             Empleado entity;
+
+            // 2. Verificar si es edición o creación, si es edición _empleadoId tendrá valor,
+            // si es creación será null
             if (_empleadoId.HasValue)
             {
+                // Si es edición, buscar la entidad existente
                 entity = await ctx.Empleados.FindAsync(_empleadoId.Value) ?? new Empleado();
             }
             else
             {
+                // Si es creación, inicializar una nueva entidad
                 entity = new Empleado();
                 ctx.Empleados.Add(entity);
             }
 
+            // 3. Recuperar los valores de los campos a la entidad
             entity.Nombre = txtNombre.Text.Trim();
             entity.ApellidoPaterno = txtApellidoPaterno.Text.Trim();
             entity.ApellidoMaterno = txtApellidoMaterno.Text.Trim();
@@ -84,8 +95,11 @@ namespace EmployeeManagment.Forms
 
             try
             {
+                // 4. Guardar los cambios en la base de datos
                 await ctx.SaveChangesAsync();
                 Result = entity;
+
+                // 5. Cerrar el formulario y devolver DialogResult.OK
                 DialogResult = DialogResult.OK;
                 Close();
             }

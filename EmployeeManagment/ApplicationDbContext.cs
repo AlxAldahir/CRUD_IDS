@@ -1,6 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using EmployeeManagment.Models;
 using EmployeeManagment.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagment
 {
@@ -15,8 +15,8 @@ namespace EmployeeManagment
         public DbSet<CatalogoPuesto> CatalogoPuestos { get; set; }
         public DbSet<CatalogoCentro> CatalogoCentros { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
-    public DbSet<Directivo> Directivos { get; set; }
-    public DbSet<ReporteEmpleadosViewModel> ReporteEmpleados { get; set; }
+        public DbSet<Directivo> Directivos { get; set; }
+        public DbSet<ReporteEmpleadosViewModel> ReporteEmpleados { get; set; }
         #endregion
 
         #region Configuraciones de las Entidades
@@ -124,7 +124,7 @@ namespace EmployeeManagment
             modelBuilder.Entity<ReporteEmpleadosViewModel>(entity =>
             {
                 entity.HasNoKey();
-                entity.ToView(null); // Not mapped to a table or view
+                entity.ToView(null);
             });
         }
         #endregion
